@@ -7,9 +7,7 @@
  */
 
 import React, { useEffect } from 'react'
-import { StyleSheet } from 'react-native'
-import DynamicTabNavigator from '../navigator/DynamicTabNavigator'
-import { HomePageNavigation } from '../navigator/NavigationUtil'
+import { StyleSheet, View, Text } from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
@@ -24,10 +22,14 @@ const styles = StyleSheet.create({
   },
 })
 
-const HomePage = (props): React$Node => {
-  HomePageNavigation.setNavigation(props.navigation)
+const DetailPage = (props): React => {
+  const { navigation } = props
 
-  return <DynamicTabNavigator />
+  return (
+    <View style={styles.container}>
+      <Text style={styles.welcome}>DetailPage</Text>
+    </View>
+  )
 }
 
-export default HomePage
+export default DetailPage

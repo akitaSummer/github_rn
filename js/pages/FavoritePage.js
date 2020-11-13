@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, Button } from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
@@ -22,10 +22,23 @@ const styles = StyleSheet.create({
   },
 })
 
-const FavoritePage = (): React$Node => {
+const FavoritePage = (props): React$Node => {
+  const { navigation } = props
+
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>FavoritePage</Text>
+      <Button
+        title={'orange'}
+        onPress={() =>
+          navigation.setParams({
+            theme: {
+              tintColor: 'red',
+              updateTime: new Date().getTime(),
+            },
+          })
+        }
+      />
     </View>
   )
 }
