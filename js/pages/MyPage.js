@@ -6,8 +6,10 @@
  * @flow strict-local
  */
 
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { StyleSheet, View, Text, Button } from 'react-native'
+import { useDispatch } from 'react-redux'
+import { onThemeChange } from '../store/actions/theme'
 
 const styles = StyleSheet.create({
   container: {
@@ -22,23 +24,17 @@ const styles = StyleSheet.create({
   },
 })
 
-const MyPage = (props): React$Node => {
-  const { navigation } = props
+const MyPage = (): React$Node => {
+  const dispatch = useDispatch()
+
+  const updateTheme = useCallback(() => {
+    dispatch(onThemeChange('red'))
+  }, [dispatch])
 
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>MyPage</Text>
-      <Button
-        title={'theme'}
-        onPress={() =>
-          navigation.setParams({
-            theme: {
-              tintColor: 'red',
-              updateTime: new Date().getTime(),
-            },
-          })
-        }
-      />
+      <Button title={'red'} onPress={() => updateTheme()} />
     </View>
   )
 }

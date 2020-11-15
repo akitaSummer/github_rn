@@ -1,6 +1,7 @@
-import React, { useState, memo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs'
 import { createAppContainer } from 'react-navigation'
+import { connect, useSelector } from 'react-redux'
 import PopularPage from '../pages/PopularPage'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import TrendingPage from '../pages/TrendingPage'
@@ -66,44 +67,24 @@ const TABS = {
   },
 }
 
-const tabBarComponent = (props) => {
-  // 设置默认主题
-  const [tabBarTheme, setTabBarTheme] = useState({
-    tintColor: props.activeTintColor,
-    updateTime: new Date().getTime(),
-  })
-
-  const { routes, index } = props.navigation.state
-
-  if (routes[index].params) {
-    // 如果有主题修改则更新主题
-    const { theme } = routes[index].params
-    if (theme && theme.updateTime > tabBarTheme.updateTime) {
-      setTabBarTheme(theme)
-    }
-  }
-
-  return (
-    <BottomTabBar
-      {...props}
-      activeTintColor={tabBarTheme.tintColor || props.activeTintColor}
-    />
-  )
-}
-
 const DynamicTabNavigator = () => {
   console.disableYellowBox = true
 
-  const Tab = (() => {
-    const { PopularPage, TrendingPage, FavoritePage, MyPage } = TABS
-    const tabs = { PopularPage, TrendingPage, FavoritePage, MyPage }
-    PopularPage.navigationOptions.tabBarLabel = 'hot'
-    return createAppContainer(
-      createBottomTabNavigator(tabs, {
-        tabBarComponent: memo(tabBarComponent),
-      }),
-    )
-  })()
+  const Tab = useMemo(() => {
+    return (() => {
+      const { PopularPage, TrendingPage, FavoritePage, MyPage } = TABS
+      const tabs = { PopularPage, TrendingPage, FavoritePage, MyPage }
+      PopularPage.navigationOptions.tabBarLabel = 'hot'
+      return createAppContainer(
+        createBottomTabNavigator(tabs, {
+          tabBarComponent: (props) => {
+            const theme = useSelector((state) => state.theme)
+            return <BottomTabBar {...props} activeTintColor={theme.theme} />
+          },
+        }),
+      )
+    })()
+  }, [])
 
   return <Tab />
 }

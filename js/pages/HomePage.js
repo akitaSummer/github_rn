@@ -25,7 +25,9 @@ const styles = StyleSheet.create({
 })
 
 const HomePage = (props): React$Node => {
-  HomePageNavigation.setNavigation(props.navigation)
+  useEffect(() => {
+    HomePageNavigation.setNavigation(props.navigation)
+  }, [props])
 
   return <DynamicTabNavigator />
 }
