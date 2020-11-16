@@ -7,7 +7,7 @@
  */
 
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, Button } from 'react-native'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
 import { createAppContainer } from 'react-navigation'
 import { goPage } from '../navigator/NavigationUtil'
@@ -38,12 +38,30 @@ const PopularTab = (props) => {
   return (
     <View>
       <Text style={styles.welcome}>PopularTab</Text>
-      <Text
+      <Button
+        title={'Detail'}
         onPress={() => {
           goPage({}, 'DetailPage')
-        }}>
-        go to detail
-      </Text>
+        }}
+      />
+      <Button
+        title={'Fetch'}
+        onPress={() => {
+          goPage({}, 'FetchDemoPage')
+        }}
+      />
+      <Button
+        title={'AsyncStorage'}
+        onPress={() => {
+          goPage({}, 'AsyncStorageDemoPage')
+        }}
+      />
+      <Button
+        title={'DataStore'}
+        onPress={() => {
+          goPage({}, 'DataStoreDemoPage')
+        }}
+      />
     </View>
   )
 }

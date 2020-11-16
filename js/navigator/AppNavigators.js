@@ -3,6 +3,9 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import HomePage from '../pages/HomePage'
 import WelcomePage from '../pages/WelcomePage'
 import DetailPage from '../pages/DetailPage'
+import AsyncStorageDemoPage from '../pages/AsyncStorageDemoPage'
+import FetchDemoPage from '../pages/FetchDemoPage'
+import DataStoreDemoPage from '../pages/DataStoreDemoPage'
 
 const InitNavigator = createStackNavigator({
   WelcomePage: {
@@ -20,7 +23,30 @@ const MainNavigator = createStackNavigator({
       header: null,
     },
   },
-  DetailPage,
+  DetailPage: {
+    screen: DetailPage,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  FetchDemoPage: {
+    screen: FetchDemoPage,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  AsyncStorageDemoPage: {
+    screen: AsyncStorageDemoPage,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  DataStoreDemoPage: {
+    screen: DataStoreDemoPage,
+    navigationOptions: {
+      header: null,
+    },
+  },
 })
 
 export default createAppContainer(
