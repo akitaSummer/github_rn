@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const DetailPage = (props): React => {
+const DetailPage = (props): React$Node => {
   const { navigation } = props
 
   return (

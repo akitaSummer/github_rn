@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 
 const KEY = 'SAVE_KEY'
 
-const AsyncStorageDemoPage = (): React => {
+const AsyncStorageDemoPage = (): React$Node => {
   const [showText, setShowText] = useState('')
 
   let value = ''

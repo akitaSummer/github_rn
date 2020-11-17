@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const FetchDemoPage = (): React => {
+const FetchDemoPage = (): React$Node => {
   const [showText, setShowText] = useState('')
 
   let searchKey = ''

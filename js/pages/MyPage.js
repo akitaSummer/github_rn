@@ -10,6 +10,7 @@ import React, { useCallback, useEffect } from 'react'
 import { StyleSheet, View, Text, Button } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { onThemeChange } from '../store/actions/theme'
+import { goPage } from '../navigator/NavigationUtil'
 
 const styles = StyleSheet.create({
   container: {
@@ -35,6 +36,30 @@ const MyPage = (): React$Node => {
     <View style={styles.container}>
       <Text style={styles.welcome}>MyPage</Text>
       <Button title={'red'} onPress={() => updateTheme()} />
+      <Button
+        title={'Detail'}
+        onPress={() => {
+          goPage({}, 'DetailPage')
+        }}
+      />
+      <Button
+        title={'Fetch'}
+        onPress={() => {
+          goPage({}, 'FetchDemoPage')
+        }}
+      />
+      <Button
+        title={'AsyncStorage'}
+        onPress={() => {
+          goPage({}, 'AsyncStorageDemoPage')
+        }}
+      />
+      <Button
+        title={'DataStore'}
+        onPress={() => {
+          goPage({}, 'DataStoreDemoPage')
+        }}
+      />
     </View>
   )
 }

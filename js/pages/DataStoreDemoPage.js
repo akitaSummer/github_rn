@@ -8,7 +8,7 @@
 
 import React, { useState } from 'react'
 import { StyleSheet, View, Text, TextInput, Button } from 'react-native'
-import { fetchData } from '../Utils/DataStoreUtils'
+import { fetchData } from '../utils/dataStoreUtils'
 
 const styles = StyleSheet.create({
   input: {
