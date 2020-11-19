@@ -14,10 +14,12 @@ import {
   RefreshControl,
   FlatList,
   Text,
+  DeviceInfo,
 } from 'react-native'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
 import { createAppContainer } from 'react-navigation'
 import { useSelector, useDispatch } from 'react-redux'
+import NavigationBar from '../components/NavigationBar'
 import actions from '../store/actions'
 import PopularItem from '../components/PopularItem'
 import Toast from 'react-native-easy-toast'
@@ -25,6 +27,7 @@ import Toast from 'react-native-easy-toast'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: DeviceInfo.isIphoneX_deprecated ? 30 : 0,
   },
   welcome: {
     fontSize: 20,
@@ -53,7 +56,7 @@ const styles = StyleSheet.create({
 
 const URL = 'https://api.github.com/search/repositories?q='
 const QUERY_STR = '&sort=stars'
-const THEME_COLOR = 'red'
+const THEME_COLOR = '#678'
 const PAGESIZE = 10
 
 const PopularTab = (props) => {
@@ -199,7 +202,7 @@ const PopularPage = (props): React$Node => {
           upperCaseLabel: false,
           scrollEnabled: true,
           style: {
-            backgroundColor: '#a67',
+            backgroundColor: THEME_COLOR,
           },
           indicatorStyle: styles.indicatorStyle,
           labelStyle: styles.labelStyle,
@@ -208,8 +211,22 @@ const PopularPage = (props): React$Node => {
     )
   })()
 
+  const statusBar = {
+    backgroundColor: THEME_COLOR,
+    barStyle: 'light-content',
+  }
+
+  const navigationBar = (
+    <NavigationBar
+      title={'hot'}
+      statusBar={statusBar}
+      style={{ backgroundColor: THEME_COLOR }}
+    />
+  )
+
   return (
     <View style={styles.container}>
+      {navigationBar}
       <TabNavigator />
     </View>
   )

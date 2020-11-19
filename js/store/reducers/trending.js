@@ -2,8 +2,8 @@ import { REDUCER_TYPES, onReducerAction } from './reducerUtils'
 
 const defaultState = {}
 /**
- * popular action
- * popular: {
+ * trending action
+ * trending: {
  *   java: {
  *     items: [],
  *     isLoading: false
@@ -16,7 +16,7 @@ const defaultState = {}
  * @param state
  * @param action
  */
-
 const onAction = (state = defaultState, action) =>
-  onReducerAction(state, action, REDUCER_TYPES.POPULAR)
+  onReducerAction(state, action, REDUCER_TYPES.TRENDING)
+
 export default onAction
