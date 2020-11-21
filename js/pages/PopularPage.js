@@ -23,6 +23,7 @@ import NavigationBar from '../components/NavigationBar'
 import actions from '../store/actions'
 import PopularItem from '../components/PopularItem'
 import Toast from 'react-native-easy-toast'
+import { goPage } from '../navigator/NavigationUtil'
 
 const styles = StyleSheet.create({
   container: {
@@ -98,7 +99,19 @@ const PopularTab = (props) => {
   // FlatList中Item渲染
   const renderItem = (data) => {
     const item = data.item
-    return <PopularItem item={item} onSelect={() => {}} />
+    return (
+      <PopularItem
+        item={item}
+        onSelect={() => {
+          goPage(
+            {
+              projectModel: item,
+            },
+            'DetailPage',
+          )
+        }}
+      />
+    )
   }
 
   // FooterComponent创建

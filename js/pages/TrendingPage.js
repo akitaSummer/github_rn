@@ -27,6 +27,7 @@ import TrendingItem from '../components/TrendingItem'
 import Toast from 'react-native-easy-toast'
 import TrendingDialog, { TimeSpans } from '../components/TrendingDialog'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { goPage } from '../navigator/NavigationUtil'
 
 const styles = StyleSheet.create({
   container: {
@@ -103,7 +104,19 @@ const TrendingTab = (props) => {
   // FlatList中Item渲染
   const renderItem = (data) => {
     const item = data.item
-    return <TrendingItem item={item} onSelect={() => {}} />
+    return (
+      <TrendingItem
+        item={item}
+        onSelect={() => {
+          goPage(
+            {
+              projectModel: item,
+            },
+            'DetailPage',
+          )
+        }}
+      />
+    )
   }
 
   // FooterComponent创建
