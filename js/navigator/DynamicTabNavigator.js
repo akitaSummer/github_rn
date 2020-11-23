@@ -9,6 +9,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import FavoritePage from '../pages/FavoritePage'
 import MyPage from '../pages/MyPage'
 import Entypo from 'react-native-vector-icons/Entypo'
+import EventBus from 'react-native-event-bus'
+import { EventTypes } from '../utils/EventUtils'
 
 const TABS = {
   PopularPage: {
@@ -86,7 +88,16 @@ const DynamicTabNavigator = () => {
     })()
   }, [])
 
-  return <Tab />
+  return (
+    <Tab
+      onNavigationStateChange={(prevState, newState, action) => {
+        EventBus.getInstance().fireEvent(EventTypes.BOTTOM_TAB_SELECT, {
+          from: prevState.index,
+          to: newState.index,
+        })
+      }}
+    />
+  )
 }
 
 export default DynamicTabNavigator

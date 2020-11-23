@@ -1,6 +1,11 @@
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import useFavorite from '../hooks/useFavorite'
+import { onFavorite } from '../utils/favoriteUtils'
+import { ACTION_TYPES } from '../store/actions/actionUtils'
+import EventBus from 'react-native-event-bus'
+import { EventTypes } from '../utils/EventUtils'
 
 const styles = StyleSheet.create({
   cell_container: {
@@ -39,7 +44,16 @@ const styles = StyleSheet.create({
 })
 
 const PopularItem = (props) => {
-  const { item } = props
+  const { projectModel } = props
+  const { item } = projectModel
+  const [onItemClick, FavoriteButton] = useFavorite(
+    projectModel,
+    (item, isFavorite) => {
+      onFavorite(ACTION_TYPES.POPULAR, item, isFavorite)
+      EventBus.getInstance().fireEvent(EventTypes.FAVORITE_CHANGE_POPULAR)
+    },
+    props.onSelect,
+  )
   if (!item || !item.owner) return null
   const favoriteButton = (
     <TouchableOpacity
@@ -50,7 +64,7 @@ const PopularItem = (props) => {
     </TouchableOpacity>
   )
   return (
-    <TouchableOpacity onPress={props.onSelect}>
+    <TouchableOpacity onPress={() => onItemClick()}>
       <View style={styles.cell_container}>
         <Text style={styles.title}>{item.full_name}</Text>
         <Text style={styles.description}>{item.description}</Text>
@@ -70,7 +84,7 @@ const PopularItem = (props) => {
             <Text>Start:</Text>
             <Text>{item.stargazers_count}</Text>
           </View>
-          {favoriteButton}
+          {FavoriteButton}
         </View>
       </View>
     </TouchableOpacity>

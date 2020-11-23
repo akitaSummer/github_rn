@@ -24,6 +24,9 @@ import actions from '../store/actions'
 import PopularItem from '../components/PopularItem'
 import Toast from 'react-native-easy-toast'
 import { goPage } from '../navigator/NavigationUtil'
+import { ACTION_TYPES } from '../store/actions/actionUtils'
+import EventBus from 'react-native-event-bus'
+import { EventTypes } from '../utils/EventUtils'
 
 const styles = StyleSheet.create({
   container: {
@@ -64,7 +67,9 @@ const PopularTab = (props) => {
   const { tabLabel } = props
   let canLoadMore
   const storeName = tabLabel
+  let isFavoriteChanged = false
   const popular = useSelector((state) => state.popular)
+  if (tabLabel === 'Java') console.log(popular)
   const dispatch = useDispatch()
   const toastRef = useRef(null)
   const refreshPopular = useCallback(
@@ -80,6 +85,14 @@ const PopularTab = (props) => {
       )
     },
     [dispatch],
+  )
+
+  const flushPopularFavorite = useCallback(
+    (storeName, pageIndex, pageSize, items) => {
+      dispatch(
+        actions.onFlushPopularFavorite(storeName, pageIndex, pageSize, items),
+      )
+    },
   )
 
   // 创建datas
@@ -101,11 +114,13 @@ const PopularTab = (props) => {
     const item = data.item
     return (
       <PopularItem
-        item={item}
-        onSelect={() => {
+        projectModel={item}
+        onSelect={(callback) => {
           goPage(
             {
               projectModel: item,
+              type: ACTION_TYPES.POPULAR,
+              callback,
             },
             'DetailPage',
           )
@@ -134,7 +149,7 @@ const PopularTab = (props) => {
     return URL + key + QUERY_STR
   }
   // 加载数据
-  const loadData = (loadMore) => {
+  const loadData = (loadMore, refreshFavorite) => {
     const store = createStore()
     const url = genFetchUrl(storeName)
     if (loadMore) {
@@ -147,19 +162,45 @@ const PopularTab = (props) => {
           toastRef.current.show('no more')
         },
       )
+    } else if (refreshFavorite) {
+      if (store.items.length)
+        flushPopularFavorite(storeName, store.pageIndex, PAGESIZE, store.items)
     } else {
       refreshPopular(storeName, url, PAGESIZE)
     }
   }
+
+  const favoriteChangeListener = () => {
+    isFavoriteChanged = true
+  }
+
+  const bottomTabSelectListener = (data) => {
+    if (data.to === 0 && isFavoriteChanged) {
+      loadData()
+    }
+  }
+
   useEffect(() => {
     loadData()
+    EventBus.getInstance().addListener(
+      EventTypes.FAVORITE_CHANGE_POPULAR,
+      favoriteChangeListener,
+    )
+    EventBus.getInstance().addListener(
+      EventTypes.BOTTOM_TAB_SELECT,
+      bottomTabSelectListener,
+    )
+    return () => {
+      EventBus.getInstance().removeListener(favoriteChangeListener)
+      EventBus.getInstance().removeListener(bottomTabSelectListener)
+    }
   }, [])
   return (
     <View>
       <FlatList
         data={createStore().projectModes}
         renderItem={(data) => renderItem(data)}
-        keyExtractor={(item) => `${item.id}`}
+        keyExtractor={(item) => `${item.item.id}`}
         refreshControl={
           <RefreshControl
             title={'loading'}

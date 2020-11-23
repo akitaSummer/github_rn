@@ -1,12 +1,46 @@
 import Types from '../types'
 import { fetchData, FLAG_STORAGE } from '../../utils/dataStoreUtils'
+import { getFavoriteKeys, checkFavorite } from '../../utils/favoriteUtils'
 
 export const ACTION_TYPES = {
   POPULAR: 'POPULAR',
   TRENDING: 'TRENDING',
+  FAVORITE: 'FAVORITE',
 }
 
-const handleData = (actionType, dispatch, storeName, data, pageSize) => {
+export class ProjectModel {
+  constructor(item, isFavorite) {
+    this.item = item
+    this.isFavorite = isFavorite
+  }
+}
+
+const projectModels = async (type, showItems, callback) => {
+  try {
+    const keys = await getFavoriteKeys(type)
+    const projectModels = []
+    showItems.forEach((item, i) => {
+      projectModels.push(
+        new ProjectModel(showItems[i], checkFavorite(showItems[i], keys, type)),
+      )
+    })
+    if (typeof callback === 'function') {
+      callback(projectModels)
+    }
+  } catch (e) {
+    throw e
+  }
+}
+
+const handleData = (
+  actionType,
+  dispatch,
+  storeName,
+  data,
+  pageSize,
+  favorite,
+  type,
+) => {
   const fixItems = []
   if (data?.data) {
     if (Array.isArray(data.data)) {
@@ -15,13 +49,18 @@ const handleData = (actionType, dispatch, storeName, data, pageSize) => {
       data.data.items.forEach((item) => fixItems.push(item))
     }
   }
-  dispatch({
-    type: actionType,
-    projectModes:
-      pageSize > fixItems.length ? fixItems : fixItems.slice(0, pageSize),
-    storeName,
-    pageIndex: 1,
-    items: fixItems,
+
+  const showItems =
+    pageSize > fixItems.length ? fixItems : fixItems.slice(0, pageSize)
+
+  projectModels(type, showItems, (projectModels) => {
+    dispatch({
+      type: actionType,
+      projectModes: projectModels,
+      storeName,
+      pageIndex: 1,
+      items: fixItems,
+    })
   })
 }
 
@@ -31,6 +70,7 @@ export const onLoadMore = (
   pageIndex,
   pageSize,
   dataArray = [],
+  favorite,
   callback,
 ) => {
   return (dispatch) => {
@@ -48,18 +88,20 @@ export const onLoadMore = (
         })
       } else {
         const max = Math.max(pageSize * pageIndex, dataArray.length)
-        dispatch({
-          type: Types[`${type}_LOAD_MORE_SUCCESS`],
-          storeName,
-          pageIndex,
-          projectModes: dataArray.slice(0, max),
+        projectModels(type, dataArray.slice(0, max), (projectModels) => {
+          dispatch({
+            type: Types[`${type}_LOAD_MORE_SUCCESS`],
+            storeName,
+            pageIndex,
+            projectModes: projectModels,
+          })
         })
       }
     }, 500)
   }
 }
 
-export const onRefresh = (type, storeName, url, pageSize) => {
+export const onRefresh = (type, storeName, url, pageSize, favorite) => {
   return async (dispatch) => {
     dispatch({
       type: Types[`${type}_REFRESH`],
@@ -76,6 +118,8 @@ export const onRefresh = (type, storeName, url, pageSize) => {
         storeName,
         data,
         pageSize,
+        favorite,
+        type,
       )
     } catch (e) {
       dispatch({
@@ -84,5 +128,25 @@ export const onRefresh = (type, storeName, url, pageSize) => {
         error,
       })
     }
+  }
+}
+
+export const onFlushFavorite = (
+  type,
+  storeName,
+  pageIndex,
+  pageSize,
+  dataArray = [],
+) => {
+  return (dispatch) => {
+    const max = Math.max(pageSize * pageIndex, dataArray.length)
+    projectModels(type, dataArray.slice(0, max), (projectModels) => {
+      dispatch({
+        type: Types[`${type}_FLUSH_FAVORITE`],
+        storeName,
+        pageIndex,
+        projectModes: projectModels,
+      })
+    })
   }
 }

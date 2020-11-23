@@ -28,6 +28,9 @@ import Toast from 'react-native-easy-toast'
 import TrendingDialog, { TimeSpans } from '../components/TrendingDialog'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { goPage } from '../navigator/NavigationUtil'
+import { ACTION_TYPES } from '../store/actions/actionUtils'
+import EventBus from 'react-native-event-bus'
+import { EventTypes } from '../utils/EventUtils'
 
 const styles = StyleSheet.create({
   container: {
@@ -69,6 +72,7 @@ const TrendingTab = (props) => {
   let { timeSpan } = props
   let canLoadMore
   const storeName = tabLabel
+  let isFavoriteChanged = false
   const Trending = useSelector((state) => state.trending)
   const dispatch = useDispatch()
   const toastRef = useRef(null)
@@ -106,11 +110,13 @@ const TrendingTab = (props) => {
     const item = data.item
     return (
       <TrendingItem
-        item={item}
-        onSelect={() => {
+        projectModel={item}
+        onSelect={(callback) => {
           goPage(
             {
               projectModel: item,
+              type: ACTION_TYPES.TRENDING,
+              callback,
             },
             'DetailPage',
           )
@@ -156,6 +162,17 @@ const TrendingTab = (props) => {
       refreshTrending(storeName, url, PAGESIZE)
     }
   }
+
+  const favoriteChangeListener = () => {
+    isFavoriteChanged = true
+  }
+
+  const bottomTabSelectListener = (data) => {
+    if (data.to === 1 && isFavoriteChanged) {
+      loadData()
+    }
+  }
+
   useEffect(() => {
     loadData()
     const timeSpanChangeListener = DeviceEventEmitter.addListener(
@@ -165,7 +182,19 @@ const TrendingTab = (props) => {
         loadData()
       },
     )
-    return () => timeSpanChangeListener?.remove()
+    EventBus.getInstance().addListener(
+      EventTypes.FAVORITE_CHANGE_TRENDING,
+      favoriteChangeListener,
+    )
+    EventBus.getInstance().addListener(
+      EventTypes.BOTTOM_TAB_SELECT,
+      bottomTabSelectListener,
+    )
+    return () => {
+      timeSpanChangeListener?.remove()
+      EventBus.getInstance().removeListener(favoriteChangeListener)
+      EventBus.getInstance().removeListener(bottomTabSelectListener)
+    }
   }, [])
 
   return (
@@ -173,7 +202,7 @@ const TrendingTab = (props) => {
       <FlatList
         data={createStore().projectModes}
         renderItem={(data) => renderItem(data)}
-        keyExtractor={(item) => `${item.id || item.fullName}`}
+        keyExtractor={(item) => `${item.item.id || item.item.fullName}`}
         refreshControl={
           <RefreshControl
             title={'loading'}

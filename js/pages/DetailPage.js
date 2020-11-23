@@ -13,6 +13,7 @@ import NavigationBar from '../components/NavigationBar'
 import { getLeftBackButton, getShareButton } from '../utils/viewUtils'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import useBackPress from '../hooks/useBackPress'
+import { removeFavoriteItem, saveFavoriteItem } from '../utils/favoriteUtils'
 
 const styles = StyleSheet.create({
   container: {
@@ -26,15 +27,17 @@ const THEME_COLOR = '#678'
 
 const DetailPage = (props): React$Node => {
   const { navigation } = props
-  const { projectModel } = navigation.state.params
+  const { projectModel, type } = navigation.state.params
 
-  const propsUrl = projectModel.html_url || TRENDING_URL + projectModel.fullName
+  const propsUrl =
+    projectModel.item.html_url || TRENDING_URL + projectModel.item.fullName
 
-  const propsTitle = projectModel.full_name || projectModel.fullName
+  const propsTitle = projectModel.item.full_name || projectModel.item.fullName
 
   const [url, setUrl] = useState(propsUrl)
   const [title, setTitle] = useState(propsTitle)
   const [canGoBack, setCanGoBack] = useState(false)
+  const [isFavorite, setIsFavorite] = useState(projectModel.isFavorite)
   const webView = useRef(null)
 
   useEffect(() => {
@@ -55,12 +58,30 @@ const DetailPage = (props): React$Node => {
     return true
   })
 
+  const onFavoriteButtonClick = () => {
+    const { projectModel, callback } = navigation.state.params
+    const isFavorite = (projectModel.isFavorite = !projectModel.isFavorite)
+    setIsFavorite(isFavorite)
+    callback(isFavorite)
+    const key = projectModel.item.fullName
+      ? projectModel.item.fullName
+      : projectModel.item.id.toString()
+    if (projectModel.isFavorite) {
+      saveFavoriteItem(type, key, JSON.stringify(key))
+    } else {
+      removeFavoriteItem(type, key)
+    }
+  }
+
   const renderRightButton = () => {
     return (
       <View style={{ flexDirection: 'row' }}>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity
+          onPress={() => {
+            onFavoriteButtonClick()
+          }}>
           <FontAwesome
-            name={'star-o'}
+            name={isFavorite ? 'star' : 'star-o'}
             size={20}
             style={{
               color: 'white',
