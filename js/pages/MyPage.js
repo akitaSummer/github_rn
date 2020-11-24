@@ -7,13 +7,22 @@
  */
 
 import React, { useCallback, useEffect } from 'react'
-import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native'
 import { useDispatch } from 'react-redux'
 import { onThemeChange } from '../store/actions/theme'
 import { goPage } from '../navigator/NavigationUtil'
 import NavigationBar from '../components/NavigationBar'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
+import { MORE_MENU } from '../utils/menuUtils'
+import GlobalStyles from '../res/globalStyles'
+import MenuItem from '../components/MenuItem'
 
 const THEME_COLOR = '#678'
 
@@ -22,9 +31,24 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
+  aboutLeft: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  item: {
+    backgroundColor: 'white',
+    padding: 10,
+    height: 90,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+  groupTitle: {
+    marginLeft: 10,
+    marginTop: 10,
+    marginBottom: 5,
+    fontSize: 12,
+    color: 'gray',
   },
 })
 
@@ -76,10 +100,110 @@ const MyPage = (): React$Node => {
     />
   )
 
+  const onClick = (menu) => {
+    let RouteName
+    const params = {}
+    switch (menu) {
+      case MORE_MENU.Tutorial:
+        RouteName = 'WebViewPage'
+        params.title = '教程'
+        params.url = 'https://github.com/akitaSummer/github_rn'
+        break
+    }
+    if (RouteName) {
+      goPage(params, RouteName)
+    }
+  }
+
   return (
-    <View style={styles.container}>
+    <View style={GlobalStyles.rootContainer}>
       {navigationBar}
-      <Text style={styles.welcome}>MyPage</Text>
+      <ScrollView>
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => onClick(MORE_MENU.About)}>
+          <View style={styles.aboutLeft}>
+            <Ionicons
+              name={MORE_MENU.About.icon}
+              size={40}
+              style={{
+                marginRight: 10,
+                color: THEME_COLOR,
+              }}
+            />
+            <Text>GitHub Popular</Text>
+          </View>
+          <Ionicons
+            name={'ios-arrow-forward'}
+            size={16}
+            style={{
+              marginRight: 10,
+              alignItems: 'center',
+              color: THEME_COLOR,
+            }}
+          />
+        </TouchableOpacity>
+        <View style={GlobalStyles.line} />
+        <MenuItem
+          callback={() => onClick(MORE_MENU.Tutorial)}
+          menu={MORE_MENU.Tutorial}
+          color={THEME_COLOR}
+        />
+        <Text style={styles.groupTitle}>趋势管理</Text>
+        <MenuItem
+          callback={() => onClick(MORE_MENU.CustomLanguage)}
+          menu={MORE_MENU.CustomLanguage}
+          color={THEME_COLOR}
+        />
+        <View style={GlobalStyles.line} />
+        <MenuItem
+          callback={() => onClick(MORE_MENU.SortLanguage)}
+          menu={MORE_MENU.SortLanguage}
+          color={THEME_COLOR}
+        />
+        <Text style={styles.groupTitle}>最热管理</Text>
+        <MenuItem
+          callback={() => onClick(MORE_MENU.CustomKey)}
+          menu={MORE_MENU.CustomKey}
+          color={THEME_COLOR}
+        />
+        <View style={GlobalStyles.line} />
+        <MenuItem
+          callback={() => onClick(MORE_MENU.SortKey)}
+          menu={MORE_MENU.SortKey}
+          color={THEME_COLOR}
+        />
+        <View style={GlobalStyles.line} />
+        <MenuItem
+          callback={() => onClick(MORE_MENU.RemoveKey)}
+          menu={MORE_MENU.RemoveKey}
+          color={THEME_COLOR}
+        />
+        <Text style={styles.groupTitle}>设置</Text>
+        <MenuItem
+          callback={() => onClick(MORE_MENU.CustomTheme)}
+          menu={MORE_MENU.CustomTheme}
+          color={THEME_COLOR}
+        />
+        <View style={GlobalStyles.line} />
+        <MenuItem
+          callback={() => onClick(MORE_MENU.About)}
+          menu={MORE_MENU.About}
+          color={THEME_COLOR}
+        />
+        <View style={GlobalStyles.line} />
+        <MenuItem
+          callback={() => onClick(MORE_MENU.AboutAuthor)}
+          menu={MORE_MENU.AboutAuthor}
+          color={THEME_COLOR}
+        />
+        <View style={GlobalStyles.line} />
+        <MenuItem
+          callback={() => onClick(MORE_MENU.Feedback)}
+          menu={MORE_MENU.Feedback}
+          color={THEME_COLOR}
+        />
+      </ScrollView>
     </View>
   )
 }

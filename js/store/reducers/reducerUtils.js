@@ -6,7 +6,6 @@ export const REDUCER_TYPES = {
 }
 
 export const onReducerAction = (state, action, type) => {
-  console.log(action.type, state)
   switch (action.type) {
     case Types[`${type}_REFRESH_SUCCESS`]:
       return {

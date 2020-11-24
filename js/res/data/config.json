@@ -1,0 +1,82 @@
+{
+  "aboutMe": {
+    "Tutorial": {
+      "name": "教程",
+      "icon": "ios-bookmarks",
+      "items": [
+        {
+          "title": "React Native基础教程",
+          "url": "https://m.imooc.com/learn/808"
+        },
+        {
+          "title": "React Native高级实战教程",
+          "url": "https://coding.imooc.com/class/304.html?mc_marking=911b955aff9c2cfc95f12d0f15e1b2e7&mc_channel=shouji"
+        }
+      ]
+    },
+    "Blog": {
+      "name": "技术博客",
+      "icon": "ios-laptop",
+      "items": [
+        {
+          "title": "个人博客",
+          "url": "https://github.com/akitaSummer/github_rn"
+        },
+        {
+          "title": "CSDN",
+          "url": "https://github.com/akitaSummer/github_rn"
+        },
+        {
+          "title": "简书",
+          "url": "https://github.com/akitaSummer/github_rn"
+        },
+        {
+          "title": "GitHub",
+          "url": "https://github.com/akitaSummer/github_rn"
+        }
+      ]
+    },
+    "Contact": {
+      "name": "联系方式",
+      "icon": "ios-contacts",
+      "items": {
+        "QQ": {
+          "title": "QQ",
+          "account": "644171127"
+        },
+        "Email": {
+          "title": "Email",
+          "account": "644171127@qq.com"
+        }
+      }
+    },
+    "QQ": {
+      "name": "QQ",
+      "icon": "ios-chatbubbles",
+      "items": [
+        {
+          "title": "本人",
+          "account": "644171127"
+        }
+      ]
+    }
+  },
+  "info": {
+    "html_url": "https://github.com/akitaSummer/github_rn",
+    "url": "https://github.com/akitaSummer/github_rn",
+    "currentRepoUrl": "https://github.com/akitaSummer/github_rn"
+  },
+  "author": {
+    "name": "akitaSummer",
+    "description": "专注于移动开发，分享知识，共享快乐。",
+    "avatar": "https://avatars2.githubusercontent.com/u/47808321?s=460&u=62b54fee0e49bfb7e83254f516802b12bbe54046&v=4",
+    "backgroundImg": "https://avatars2.githubusercontent.com/u/47808321?s=460&u=62b54fee0e49bfb7e83254f516802b12bbe54046&v=4",
+    "url": "https://github.com/akitaSummer"
+  },
+  "app": {
+    "name": "GitHub Popular",
+    "description": "这是一个用来查看GitHub最受欢迎与最热项目的App,它基于React Native支持Android和iOS双平台。",
+    "avatar": "https://www.devio.org/io/GitHubPopular/img/ic_app.png",
+    "backgroundImg": "https://www.devio.org/io/GitHubPopular/img/for_githubpopular_about_me.jpg"
+  }
+}

@@ -69,7 +69,6 @@ const PopularTab = (props) => {
   const storeName = tabLabel
   let isFavoriteChanged = false
   const popular = useSelector((state) => state.popular)
-  if (tabLabel === 'Java') console.log(popular)
   const dispatch = useDispatch()
   const toastRef = useRef(null)
   const refreshPopular = useCallback(
