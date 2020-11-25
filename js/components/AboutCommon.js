@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import ParallaxScrollView from 'react-native-parallax-scroll-view'
-import useBackPress from './useBackPress'
+import useBackPress from '../hooks/useBackPress'
 import config from '../res/data/config.json'
 import {
   View,
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   stickySection: {
     height: STICKY_HEADER_HEIGHT,
     alignItems: 'center',
-    paddingTop: TOP,
+    paddingTop: 0,
   },
   stickySectionText: {
     color: 'white',
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: TOP,
+    paddingTop: 0,
   },
   fixedSectionText: {
     color: '#999',
@@ -84,8 +84,13 @@ const styles = StyleSheet.create({
   },
 })
 
-const useAboutCommon = (props) => {
-  const { navigation, updateState, children } = props
+export const FLAG_ABOUT = {
+  FLAG_ABOUT: 'FLAG_ABOUT',
+  FLAG_ABOUT_ME: 'FLAG_ABOUT_ME',
+}
+
+const AboutCommon = (props) => {
+  const { navigation, updateState, params, data, children } = props
 
   const onBackFunc = () => {
     navigation.goBack()
@@ -166,7 +171,7 @@ const useAboutCommon = (props) => {
 
   useEffect(() => {
     // getConfig()
-    updateState({ config })
+    updateState({ ...config })
   }, [])
 
   return (
@@ -183,10 +188,10 @@ const useAboutCommon = (props) => {
       //     <Text>Hello world!</Text>
       //   </View>
       // )}
-      {...getParallaxRenderConfig(config)}>
+      {...getParallaxRenderConfig(data)}>
       {children}
     </ParallaxScrollView>
   )
 }
 
-export default useAboutCommon
+export default AboutCommon

@@ -14,8 +14,6 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native'
-import { useDispatch } from 'react-redux'
-import { onThemeChange } from '../store/actions/theme'
 import { goPage } from '../navigator/NavigationUtil'
 import NavigationBar from '../components/NavigationBar'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -53,12 +51,6 @@ const styles = StyleSheet.create({
 })
 
 const MyPage = (): React$Node => {
-  const dispatch = useDispatch()
-
-  const updateTheme = useCallback(() => {
-    dispatch(onThemeChange('red'))
-  }, [dispatch])
-
   const getRightButton = () => {
     return (
       <View style={{ flexDirection: 'row' }}>
@@ -108,6 +100,12 @@ const MyPage = (): React$Node => {
         RouteName = 'WebViewPage'
         params.title = '教程'
         params.url = 'https://github.com/akitaSummer/github_rn'
+        break
+      case MORE_MENU.About:
+        RouteName = 'AboutPage'
+        break
+      case MORE_MENU.AboutAuthor:
+        RouteName = 'AboutMePage'
         break
     }
     if (RouteName) {

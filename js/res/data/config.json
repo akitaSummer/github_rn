@@ -38,7 +38,7 @@
     },
     "Contact": {
       "name": "联系方式",
-      "icon": "ios-contacts",
+      "icon": "ios-color-palette",
       "items": {
         "QQ": {
           "title": "QQ",
