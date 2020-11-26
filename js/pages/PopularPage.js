@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import {
   StyleSheet,
   View,
@@ -27,6 +27,7 @@ import { goPage } from '../navigator/NavigationUtil'
 import { ACTION_TYPES } from '../store/actions/actionUtils'
 import EventBus from 'react-native-event-bus'
 import { EventTypes } from '../utils/EventUtils'
+import { FLAG_LANGUAGE } from '../utils/languageUtils'
 
 const styles = StyleSheet.create({
   container: {
@@ -230,39 +231,51 @@ const PopularTab = (props) => {
 }
 
 const PopularPage = (props): React$Node => {
-  const [tabNames, setTabNames] = useState([
-    'Java',
-    'Android',
-    'ios',
-    'React Native',
-  ])
+  const language = useSelector((state) => state.language)
+  const [tabNames, setTabNames] = useState(language.keys)
+  const dispatch = useDispatch()
+  const loadLanguage = useCallback(() => {
+    dispatch(actions.onLoadLanguage(FLAG_LANGUAGE.FLAG_KEY))
+  }, [dispatch])
 
-  const TabNavigator = (() => {
+  useEffect(() => {
+    setTabNames(language.keys)
+  }, [language])
+
+  useEffect(() => {
+    loadLanguage()
+  }, [])
+
+  const TabNavigator = useMemo(() => {
     const tabs = {}
     tabNames.forEach((item, index) => {
-      tabs[`tab${index}`] = {
-        screen: (props) => <PopularTab {...props} tabLabel={item} />,
-        navigationOptions: {
-          title: item,
-        },
+      if (item.checked) {
+        tabs[`tab${index}`] = {
+          screen: (props) => <PopularTab {...props} tabLabel={item.name} />,
+          navigationOptions: {
+            title: item.name,
+          },
+        }
       }
     })
 
-    return createAppContainer(
-      createMaterialTopTabNavigator(tabs, {
-        tabBarOptions: {
-          tabStyle: styles.tabStyle,
-          upperCaseLabel: false,
-          scrollEnabled: true,
-          style: {
-            backgroundColor: THEME_COLOR,
-          },
-          indicatorStyle: styles.indicatorStyle,
-          labelStyle: styles.labelStyle,
-        },
-      }),
-    )
-  })()
+    return language.keys.length > 0
+      ? createAppContainer(
+          createMaterialTopTabNavigator(tabs, {
+            tabBarOptions: {
+              tabStyle: styles.tabStyle,
+              upperCaseLabel: false,
+              scrollEnabled: true,
+              style: {
+                backgroundColor: THEME_COLOR,
+              },
+              indicatorStyle: styles.indicatorStyle,
+              labelStyle: styles.labelStyle,
+            },
+          }),
+        )
+      : null
+  }, [tabNames])
 
   const statusBar = {
     backgroundColor: THEME_COLOR,
@@ -280,7 +293,7 @@ const PopularPage = (props): React$Node => {
   return (
     <View style={styles.container}>
       {navigationBar}
-      <TabNavigator />
+      {TabNavigator && <TabNavigator />}
     </View>
   )
 }

@@ -31,6 +31,7 @@ import { goPage } from '../navigator/NavigationUtil'
 import { ACTION_TYPES } from '../store/actions/actionUtils'
 import EventBus from 'react-native-event-bus'
 import { EventTypes } from '../utils/EventUtils'
+import { FLAG_LANGUAGE } from '../utils/languageUtils'
 
 const styles = StyleSheet.create({
   container: {
@@ -233,31 +234,46 @@ const TrendingTab = (props) => {
 }
 
 const TrendingPage = (props): React$Node => {
-  const [tabNames] = useState(['', 'C', 'C#', 'PHP', 'JavaScript'])
+  const language = useSelector((state) => state.language)
+  const [tabNames, setTabNames] = useState(language.languages)
   const [visible, setVisible] = useState(false)
   const [timeSpan, setTimeSpan] = useState(TimeSpans[0])
   const buttonRef = useRef(null)
+  const dispatch = useDispatch()
+  const loadLanguage = useCallback(() => {
+    dispatch(actions.onLoadLanguage(FLAG_LANGUAGE.FLAG_LANGUAGE))
+  }, [dispatch])
+
+  useEffect(() => {
+    console.log(language)
+    setTabNames(language.languages)
+  }, [language])
+
+  useEffect(() => {
+    loadLanguage()
+  }, [])
 
   const onShow = () => setVisible(true)
 
   const dismiss = () => setVisible(false)
 
-  const TabNavigator = useMemo(
-    () =>
-      (() => {
-        const tabs = {}
-        tabNames.forEach((item, index) => {
-          tabs[`tab${index}`] = {
-            screen: (props) => (
-              <TrendingTab {...props} timeSpan={timeSpan} tabLabel={item} />
-            ),
-            navigationOptions: {
-              title: item === '' ? 'All' : item,
-            },
-          }
-        })
-
-        return createAppContainer(
+  const TabNavigator = useMemo(() => {
+    const tabs = {}
+    tabNames.forEach((item, index) => {
+      if (item.checked) {
+        tabs[`tab${index}`] = {
+          screen: (props) => (
+            <TrendingTab {...props} timeSpan={timeSpan} tabLabel={item.name} />
+          ),
+          navigationOptions: {
+            title: item.name === '' ? 'All Language' : item.name,
+          },
+        }
+      }
+    })
+    console.log(tabs)
+    return language.languages.length > 0
+      ? createAppContainer(
           createMaterialTopTabNavigator(tabs, {
             tabBarOptions: {
               tabStyle: styles.tabStyle,
@@ -271,9 +287,8 @@ const TrendingPage = (props): React$Node => {
             },
           }),
         )
-      })(),
-    [],
-  )
+      : null
+  }, [tabNames])
 
   const statusBar = {
     backgroundColor: THEME_COLOR,
@@ -333,7 +348,7 @@ const TrendingPage = (props): React$Node => {
   return (
     <View style={styles.container}>
       {navigationBar}
-      <TabNavigator />
+      {TabNavigator && <TabNavigator />}
       {renderTrendingDialog()}
     </View>
   )

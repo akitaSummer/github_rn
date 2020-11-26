@@ -1,0 +1,20 @@
+{
+  "share_app": {
+    "title": "分享GitHub Popular",
+    "content": "GitHub Popular",
+    "imgUrl": "https://avatars2.githubusercontent.com/u/47808321?s=460&u=62b54fee0e49bfb7e83254f516802b12bbe54046&v=4",
+    "url": "https://github.com/akitaSummer/github_rn"
+  },
+  "share_blog": {
+    "title": "分享贾鹏辉的技术博客",
+    "content": "GitHub Popular",
+    "imgUrl": "https://avatars2.githubusercontent.com/u/47808321?s=460&u=62b54fee0e49bfb7e83254f516802b12bbe54046&v=4",
+    "url": "https://github.com/akitaSummer/github_rn"
+  },
+  "share_repo": {
+    "title": "来自GitHub Popular的分享",
+    "content": "GitHub Popular",
+    "imgUrl": "https://avatars2.githubusercontent.com/u/47808321?s=460&u=62b54fee0e49bfb7e83254f516802b12bbe54046&v=4",
+    "url": "https://github.com/akitaSummer/github_rn"
+  }
+}
