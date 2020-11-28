@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, Text } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 export const getLeftBackButton = (callback) => {
@@ -23,6 +23,16 @@ export const getShareButton = (callback) => {
         size={20}
         style={{ opacity: 0.9, marginRight: 10, color: 'white' }}
       />
+    </TouchableOpacity>
+  )
+}
+
+export const getRightButton = (title, callback) => {
+  return (
+    <TouchableOpacity style={{ alignItems: 'center' }} onPress={callback}>
+      <Text style={{ fontSize: 20, color: '#FFF', marginRight: 10 }}>
+        {title}
+      </Text>
     </TouchableOpacity>
   )
 }

@@ -232,14 +232,14 @@ const PopularTab = (props) => {
 
 const PopularPage = (props): React$Node => {
   const language = useSelector((state) => state.language)
-  const [tabNames, setTabNames] = useState(language.keys)
+  const [tabNames, setTabNames] = useState([...language.keys])
   const dispatch = useDispatch()
   const loadLanguage = useCallback(() => {
     dispatch(actions.onLoadLanguage(FLAG_LANGUAGE.FLAG_KEY))
   }, [dispatch])
 
   useEffect(() => {
-    setTabNames(language.keys)
+    setTabNames([...language.keys])
   }, [language])
 
   useEffect(() => {
@@ -272,6 +272,7 @@ const PopularPage = (props): React$Node => {
               indicatorStyle: styles.indicatorStyle,
               labelStyle: styles.labelStyle,
             },
+            lazy: true,
           }),
         )
       : null

@@ -7,13 +7,11 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react'
-import { StyleSheet, View, TouchableOpacity, DeviceInfo } from 'react-native'
+import { StyleSheet, View, DeviceInfo } from 'react-native'
 import WebView from 'react-native-webview'
 import NavigationBar from '../components/NavigationBar'
 import { getLeftBackButton, getShareButton } from '../utils/viewUtils'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import useBackPress from '../hooks/useBackPress'
-import { removeFavoriteItem, saveFavoriteItem } from '../utils/favoriteUtils'
 
 const styles = StyleSheet.create({
   container: {

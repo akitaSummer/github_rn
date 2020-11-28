@@ -21,6 +21,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import { MORE_MENU } from '../utils/menuUtils'
 import GlobalStyles from '../res/globalStyles'
 import MenuItem from '../components/MenuItem'
+import { FLAG_LANGUAGE } from '../utils/languageUtils'
 
 const THEME_COLOR = '#678'
 
@@ -106,6 +107,16 @@ const MyPage = (): React$Node => {
         break
       case MORE_MENU.AboutAuthor:
         RouteName = 'AboutMePage'
+        break
+      case MORE_MENU.CustomKey:
+      case MORE_MENU.CustomLanguage:
+      case MORE_MENU.RemoveKey:
+        RouteName = 'CustomKeyPage'
+        params.isRemoveKey = menu === MORE_MENU.RemoveKey
+        params.flag =
+          menu !== MORE_MENU.CustomLanguage
+            ? FLAG_LANGUAGE.FLAG_KEY
+            : FLAG_LANGUAGE.FLAG_LANGUAGE
         break
     }
     if (RouteName) {

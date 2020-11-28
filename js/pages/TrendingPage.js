@@ -235,7 +235,7 @@ const TrendingTab = (props) => {
 
 const TrendingPage = (props): React$Node => {
   const language = useSelector((state) => state.language)
-  const [tabNames, setTabNames] = useState(language.languages)
+  const [tabNames, setTabNames] = useState([...language.languages])
   const [visible, setVisible] = useState(false)
   const [timeSpan, setTimeSpan] = useState(TimeSpans[0])
   const buttonRef = useRef(null)
@@ -245,8 +245,7 @@ const TrendingPage = (props): React$Node => {
   }, [dispatch])
 
   useEffect(() => {
-    console.log(language)
-    setTabNames(language.languages)
+    setTabNames([...language.languages])
   }, [language])
 
   useEffect(() => {
@@ -271,7 +270,7 @@ const TrendingPage = (props): React$Node => {
         }
       }
     })
-    console.log(tabs)
+
     return language.languages.length > 0
       ? createAppContainer(
           createMaterialTopTabNavigator(tabs, {
@@ -285,6 +284,7 @@ const TrendingPage = (props): React$Node => {
               indicatorStyle: styles.indicatorStyle,
               labelStyle: styles.labelStyle,
             },
+            lazy: true,
           }),
         )
       : null
