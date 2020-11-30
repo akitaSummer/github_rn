@@ -12,6 +12,7 @@ import WebView from 'react-native-webview'
 import NavigationBar from '../components/NavigationBar'
 import { getLeftBackButton, getShareButton } from '../utils/viewUtils'
 import useBackPress from '../hooks/useBackPress'
+import { useSelector } from 'react-redux'
 
 const styles = StyleSheet.create({
   container: {
@@ -21,10 +22,10 @@ const styles = StyleSheet.create({
 })
 
 const TRENDING_URL = 'https://github.com/'
-const THEME_COLOR = '#678'
 
 const WebViewPage = (props): React$Node => {
   const { navigation } = props
+  const { theme } = useSelector((state) => state.theme)
   const { title: propsTitle, url: propsUrl } = navigation.state.params
 
   const [url, setUrl] = useState(propsUrl)
@@ -56,7 +57,7 @@ const WebViewPage = (props): React$Node => {
       <NavigationBar
         leftButton={getLeftBackButton(() => onBackFunc())}
         title={title}
-        style={{ backgroundColor: THEME_COLOR }}
+        style={{ backgroundColor: theme.themeColor }}
       />
     )
   }

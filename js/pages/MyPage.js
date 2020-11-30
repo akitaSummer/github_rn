@@ -22,8 +22,8 @@ import { MORE_MENU } from '../utils/menuUtils'
 import GlobalStyles from '../res/globalStyles'
 import MenuItem from '../components/MenuItem'
 import { FLAG_LANGUAGE } from '../utils/languageUtils'
-
-const THEME_COLOR = '#678'
+import actions from '../store/actions'
+import { useSelector, useDispatch } from 'react-redux'
 
 const styles = StyleSheet.create({
   container: {
@@ -51,7 +51,16 @@ const styles = StyleSheet.create({
   },
 })
 
-const MyPage = (): React$Node => {
+const MyPage = (props): React$Node => {
+  const { theme } = useSelector((state) => state.theme)
+  const dispatch = useDispatch()
+  const showCustomThemeView = useCallback(
+    (show) => {
+      dispatch(actions.onShowCustomThemeView(show))
+    },
+    [dispatch],
+  )
+
   const getRightButton = () => {
     return (
       <View style={{ flexDirection: 'row' }}>
@@ -79,7 +88,7 @@ const MyPage = (): React$Node => {
   }
 
   const statusBar = {
-    backgroundColor: THEME_COLOR,
+    backgroundColor: theme.styles.navBar,
     barStyle: 'light-content',
   }
 
@@ -87,7 +96,7 @@ const MyPage = (): React$Node => {
     <NavigationBar
       title={'MyPage'}
       statusBar={statusBar}
-      style={{ backgroundColor: THEME_COLOR }}
+      style={{ backgroundColor: theme.themeColor }}
       rightButton={getRightButton()}
       leftButton={getLeftButton()}
     />
@@ -105,6 +114,9 @@ const MyPage = (): React$Node => {
       case MORE_MENU.About:
         RouteName = 'AboutPage'
         break
+      case MORE_MENU.CustomTheme:
+        showCustomThemeView(true)
+        break
       case MORE_MENU.AboutAuthor:
         RouteName = 'AboutMePage'
         break
@@ -117,6 +129,14 @@ const MyPage = (): React$Node => {
           menu !== MORE_MENU.CustomLanguage
             ? FLAG_LANGUAGE.FLAG_KEY
             : FLAG_LANGUAGE.FLAG_LANGUAGE
+        break
+      case MORE_MENU.SortKey:
+        RouteName = 'SortKeyPage'
+        params.flag = FLAG_LANGUAGE.FLAG_KEY
+        break
+      case MORE_MENU.SortLanguage:
+        RouteName = 'SortKeyPage'
+        params.flag = FLAG_LANGUAGE.FLAG_LANGUAGE
         break
     }
     if (RouteName) {
@@ -137,7 +157,7 @@ const MyPage = (): React$Node => {
               size={40}
               style={{
                 marginRight: 10,
-                color: THEME_COLOR,
+                color: theme.themeColor,
               }}
             />
             <Text>GitHub Popular</Text>
@@ -148,7 +168,7 @@ const MyPage = (): React$Node => {
             style={{
               marginRight: 10,
               alignItems: 'center',
-              color: THEME_COLOR,
+              color: theme.themeColor,
             }}
           />
         </TouchableOpacity>
@@ -156,61 +176,61 @@ const MyPage = (): React$Node => {
         <MenuItem
           callback={() => onClick(MORE_MENU.Tutorial)}
           menu={MORE_MENU.Tutorial}
-          color={THEME_COLOR}
+          color={theme.themeColor}
         />
         <Text style={styles.groupTitle}>趋势管理</Text>
         <MenuItem
           callback={() => onClick(MORE_MENU.CustomLanguage)}
           menu={MORE_MENU.CustomLanguage}
-          color={THEME_COLOR}
+          color={theme.themeColor}
         />
         <View style={GlobalStyles.line} />
         <MenuItem
           callback={() => onClick(MORE_MENU.SortLanguage)}
           menu={MORE_MENU.SortLanguage}
-          color={THEME_COLOR}
+          color={theme.themeColor}
         />
         <Text style={styles.groupTitle}>最热管理</Text>
         <MenuItem
           callback={() => onClick(MORE_MENU.CustomKey)}
           menu={MORE_MENU.CustomKey}
-          color={THEME_COLOR}
+          color={theme.themeColor}
         />
         <View style={GlobalStyles.line} />
         <MenuItem
           callback={() => onClick(MORE_MENU.SortKey)}
           menu={MORE_MENU.SortKey}
-          color={THEME_COLOR}
+          color={theme.themeColor}
         />
         <View style={GlobalStyles.line} />
         <MenuItem
           callback={() => onClick(MORE_MENU.RemoveKey)}
           menu={MORE_MENU.RemoveKey}
-          color={THEME_COLOR}
+          color={theme.themeColor}
         />
         <Text style={styles.groupTitle}>设置</Text>
         <MenuItem
           callback={() => onClick(MORE_MENU.CustomTheme)}
           menu={MORE_MENU.CustomTheme}
-          color={THEME_COLOR}
+          color={theme.themeColor}
         />
         <View style={GlobalStyles.line} />
         <MenuItem
           callback={() => onClick(MORE_MENU.About)}
           menu={MORE_MENU.About}
-          color={THEME_COLOR}
+          color={theme.themeColor}
         />
         <View style={GlobalStyles.line} />
         <MenuItem
           callback={() => onClick(MORE_MENU.AboutAuthor)}
           menu={MORE_MENU.AboutAuthor}
-          color={THEME_COLOR}
+          color={theme.themeColor}
         />
         <View style={GlobalStyles.line} />
         <MenuItem
           callback={() => onClick(MORE_MENU.Feedback)}
           menu={MORE_MENU.Feedback}
-          color={THEME_COLOR}
+          color={theme.themeColor}
         />
       </ScrollView>
     </View>

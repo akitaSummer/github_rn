@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { TouchableOpacity } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { useSelector } from 'react-redux'
 
 const useFavorite = (projectModel, onFavorite, onSelect) => {
   const [isFavorite, setIsFavorite] = useState(projectModel.isFavorite)
-
+  const { theme } = useSelector((state) => state.theme)
   useEffect(() => {
     const favorite = projectModel.isFavorite
     if (favorite !== isFavorite) {
@@ -34,7 +35,7 @@ const useFavorite = (projectModel, onFavorite, onSelect) => {
       <FontAwesome
         name={isFavorite ? 'star' : 'star-o'}
         size={26}
-        style={{ color: '#678' }}
+        style={{ color: theme.themeColor }}
       />
     </TouchableOpacity>,
   ]

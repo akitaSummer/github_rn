@@ -10,10 +10,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import {
   StyleSheet,
   View,
-  Text,
-  Button,
   DeviceInfo,
-  ActivityIndicator,
   FlatList,
   RefreshControl,
 } from 'react-native'
@@ -61,10 +58,8 @@ const styles = StyleSheet.create({
   },
 })
 
-const THEME_COLOR = '#678'
-
 const FavoriteTab = (props) => {
-  const { type } = props
+  const { type, themeColor } = props
   const storeName = type
   const favorite = useSelector((state) => state.favorite)
   const dispatch = useDispatch()
@@ -137,11 +132,11 @@ const FavoriteTab = (props) => {
         refreshControl={
           <RefreshControl
             title={'loading'}
-            titleColor={THEME_COLOR}
-            colors={[THEME_COLOR]}
+            titleColor={themeColor}
+            colors={[themeColor]}
             refreshing={createStore().isLoading}
             onRefresh={() => loadData(true)}
-            tintColor={THEME_COLOR}
+            tintColor={themeColor}
           />
         }
       />
@@ -151,13 +146,18 @@ const FavoriteTab = (props) => {
 }
 
 const FavoritePage = (props): React$Node => {
+  const { theme } = useSelector((state) => state.theme)
   const TabNavigator = (() => {
     return createAppContainer(
       createMaterialTopTabNavigator(
         {
           Popular: {
             screen: (props) => (
-              <FavoriteTab {...props} type={ACTION_TYPES.POPULAR} />
+              <FavoriteTab
+                {...props}
+                type={ACTION_TYPES.POPULAR}
+                themeColor={theme.themeColor}
+              />
             ),
             navigationOptions: {
               title: 'hot',
@@ -165,7 +165,11 @@ const FavoritePage = (props): React$Node => {
           },
           Trending: {
             screen: (props) => (
-              <FavoriteTab {...props} type={ACTION_TYPES.TRENDING} />
+              <FavoriteTab
+                {...props}
+                type={ACTION_TYPES.TRENDING}
+                themeColor={theme.themeColor}
+              />
             ),
             navigationOptions: {
               title: '趋势',
@@ -177,7 +181,7 @@ const FavoritePage = (props): React$Node => {
             tabStyle: styles.tabStyle,
             upperCaseLabel: false,
             style: {
-              backgroundColor: THEME_COLOR,
+              backgroundColor: theme.themeColor,
             },
             indicatorStyle: styles.indicatorStyle,
             labelStyle: styles.labelStyle,
@@ -188,7 +192,7 @@ const FavoritePage = (props): React$Node => {
   })()
 
   const statusBar = {
-    backgroundColor: THEME_COLOR,
+    backgroundColor: theme.themeColor,
     barStyle: 'light-content',
   }
 
@@ -196,7 +200,7 @@ const FavoritePage = (props): React$Node => {
     <NavigationBar
       title={'hot'}
       statusBar={statusBar}
-      style={{ backgroundColor: THEME_COLOR }}
+      style={{ backgroundColor: theme.themeColor }}
     />
   )
 

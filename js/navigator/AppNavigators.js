@@ -10,6 +10,7 @@ import WebViewPage from '../pages/WebViewPage'
 import AboutPage from '../pages/AboutPage'
 import AboutMePage from '../pages/AboutMePage'
 import CustomKeyPage from '../pages/CustomKeyPage'
+import SortKeyPage from '../pages/SortKeyPage'
 
 const InitNavigator = createStackNavigator({
   WelcomePage: {
@@ -71,6 +72,12 @@ const MainNavigator = createStackNavigator({
   },
   CustomKeyPage: {
     screen: CustomKeyPage,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  SortKeyPage: {
+    screen: SortKeyPage,
     navigationOptions: {
       header: null,
     },

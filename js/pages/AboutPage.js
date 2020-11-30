@@ -15,8 +15,7 @@ import GlobalStyles from '../res/globalStyles'
 import MenuItem from '../components/MenuItem'
 import { FLAG_ABOUT } from '../components/AboutCommon'
 import config from '../res/data/config.json'
-
-const THEME_COLOR = '#678'
+import { useSelector } from 'react-redux'
 
 const styles = StyleSheet.create({
   container: {
@@ -47,6 +46,7 @@ const styles = StyleSheet.create({
 const AboutPage = (props): React$Node => {
   const { navigation } = props
   const { params } = navigation.state
+  const { theme } = useSelector((state) => state.theme)
   const [data, setData] = useState(config)
 
   const onClick = (menu) => {
@@ -92,19 +92,19 @@ const AboutPage = (props): React$Node => {
         <MenuItem
           callback={() => onClick(MORE_MENU.Tutorial)}
           menu={MORE_MENU.Tutorial}
-          color={THEME_COLOR}
+          color={theme.themeColor}
         />
         <View style={GlobalStyles.line} />
         <MenuItem
           callback={() => onClick(MORE_MENU.AboutAuthor)}
           menu={MORE_MENU.AboutAuthor}
-          color={THEME_COLOR}
+          color={theme.themeColor}
         />
         <View style={GlobalStyles.line} />
         <MenuItem
           callback={() => onClick(MORE_MENU.Feedback)}
           menu={MORE_MENU.Feedback}
-          color={THEME_COLOR}
+          color={theme.themeColor}
         />
       </AboutCommon>
     </View>

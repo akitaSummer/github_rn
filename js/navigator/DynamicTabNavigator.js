@@ -81,7 +81,9 @@ const DynamicTabNavigator = () => {
         createBottomTabNavigator(tabs, {
           tabBarComponent: (props) => {
             const theme = useSelector((state) => state.theme)
-            return <BottomTabBar {...props} activeTintColor={theme.theme} />
+            return (
+              <BottomTabBar {...props} activeTintColor={theme.themeColor} />
+            )
           },
         }),
       )

@@ -14,6 +14,7 @@ import { getLeftBackButton, getShareButton } from '../utils/viewUtils'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import useBackPress from '../hooks/useBackPress'
 import { removeFavoriteItem, saveFavoriteItem } from '../utils/favoriteUtils'
+import { useSelector } from 'react-redux'
 
 const styles = StyleSheet.create({
   container: {
@@ -23,12 +24,11 @@ const styles = StyleSheet.create({
 })
 
 const TRENDING_URL = 'https://github.com/'
-const THEME_COLOR = '#678'
 
 const DetailPage = (props): React$Node => {
   const { navigation } = props
   const { projectModel, type } = navigation.state.params
-
+  const { theme } = useSelector((state) => state.theme)
   const propsUrl =
     projectModel.item.html_url || TRENDING_URL + projectModel.item.fullName
 
@@ -101,7 +101,7 @@ const DetailPage = (props): React$Node => {
         leftButton={getLeftBackButton(() => onBackFunc())}
         title={title}
         titleLayoutStyle={titleLayoutStyle}
-        style={{ backgroundColor: THEME_COLOR }}
+        style={{ backgroundColor: theme.themeColor }}
         rightButton={renderRightButton()}
       />
     )

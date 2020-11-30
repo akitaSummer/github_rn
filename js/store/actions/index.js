@@ -1,4 +1,4 @@
-import { onThemeChange } from './theme'
+import { onThemeChange, onShowCustomThemeView, onThemeInit } from './theme'
 import {
   onRefreshPopular,
   onLoadMorePopular,
@@ -22,4 +22,6 @@ export default {
   onFlushPopularFavorite,
   onFlushTrendingFavorite,
   onLoadLanguage,
+  onShowCustomThemeView,
+  onThemeInit,
 }

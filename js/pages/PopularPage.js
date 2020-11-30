@@ -61,11 +61,10 @@ const styles = StyleSheet.create({
 
 const URL = 'https://api.github.com/search/repositories?q='
 const QUERY_STR = '&sort=stars'
-const THEME_COLOR = '#678'
 const PAGESIZE = 10
 
 const PopularTab = (props) => {
-  const { tabLabel } = props
+  const { tabLabel, themeColor } = props
   let canLoadMore
   const storeName = tabLabel
   let isFavoriteChanged = false
@@ -204,11 +203,11 @@ const PopularTab = (props) => {
         refreshControl={
           <RefreshControl
             title={'loading'}
-            titleColor={THEME_COLOR}
-            colors={[THEME_COLOR]}
+            titleColor={themeColor}
+            colors={[themeColor]}
             refreshing={createStore().isLoading}
             onRefresh={() => loadData()}
-            tintColor={THEME_COLOR}
+            tintColor={themeColor}
           />
         }
         ListFooterComponent={() => genIndicator()}
@@ -231,6 +230,7 @@ const PopularTab = (props) => {
 }
 
 const PopularPage = (props): React$Node => {
+  const { theme } = useSelector((state) => state.theme)
   const language = useSelector((state) => state.language)
   const [tabNames, setTabNames] = useState([...language.keys])
   const dispatch = useDispatch()
@@ -251,7 +251,13 @@ const PopularPage = (props): React$Node => {
     tabNames.forEach((item, index) => {
       if (item.checked) {
         tabs[`tab${index}`] = {
-          screen: (props) => <PopularTab {...props} tabLabel={item.name} />,
+          screen: (props) => (
+            <PopularTab
+              {...props}
+              tabLabel={item.name}
+              themeColor={theme.themeColor}
+            />
+          ),
           navigationOptions: {
             title: item.name,
           },
@@ -267,7 +273,7 @@ const PopularPage = (props): React$Node => {
               upperCaseLabel: false,
               scrollEnabled: true,
               style: {
-                backgroundColor: THEME_COLOR,
+                backgroundColor: theme.themeColor,
               },
               indicatorStyle: styles.indicatorStyle,
               labelStyle: styles.labelStyle,
@@ -276,10 +282,10 @@ const PopularPage = (props): React$Node => {
           }),
         )
       : null
-  }, [tabNames])
+  }, [tabNames, theme])
 
   const statusBar = {
-    backgroundColor: THEME_COLOR,
+    backgroundColor: theme.themeColor,
     barStyle: 'light-content',
   }
 
@@ -287,7 +293,7 @@ const PopularPage = (props): React$Node => {
     <NavigationBar
       title={'hot'}
       statusBar={statusBar}
-      style={{ backgroundColor: THEME_COLOR }}
+      style={{ backgroundColor: theme.themeColor }}
     />
   )
 

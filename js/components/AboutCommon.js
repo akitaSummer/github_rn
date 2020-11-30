@@ -12,8 +12,7 @@ import {
 } from 'react-native'
 import { getLeftBackButton, getShareButton } from '../utils/viewUtils'
 import GlobalStyles from '../res/globalStyles'
-
-const THEME_COLOR = '#678'
+import { useSelector } from 'react-redux'
 const AVATAR_SIZE = 90
 const PARALLAX_HEADER_HEIGHT = 270
 const STICKY_HEADER_HEIGHT =
@@ -91,7 +90,7 @@ export const FLAG_ABOUT = {
 
 const AboutCommon = (props) => {
   const { navigation, updateState, params, data, children } = props
-
+  const { theme } = useSelector((state) => state.theme)
   const onBackFunc = () => {
     navigation.goBack()
     return
@@ -176,7 +175,7 @@ const AboutCommon = (props) => {
 
   return (
     <ParallaxScrollView
-      backgroundColor={THEME_COLOR}
+      backgroundColor={theme.themeColor}
       contentBackgroundColor={GlobalStyles.backgroundColor}
       parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
       stickyHeaderHeight={STICKY_HEADER_HEIGHT}

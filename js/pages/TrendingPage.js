@@ -65,11 +65,10 @@ const styles = StyleSheet.create({
 
 const EVENT_TYPE_TIME_SPAN_CHANGE = 'EVENT_TYPE_TIME_SPAN_CHANGE'
 const URL = 'https://github.com/trending/'
-const THEME_COLOR = '#678'
 const PAGESIZE = 10
 
 const TrendingTab = (props) => {
-  const { tabLabel } = props
+  const { tabLabel, themeColor } = props
   let { timeSpan } = props
   let canLoadMore
   const storeName = tabLabel
@@ -207,11 +206,11 @@ const TrendingTab = (props) => {
         refreshControl={
           <RefreshControl
             title={'loading'}
-            titleColor={THEME_COLOR}
-            colors={[THEME_COLOR]}
+            titleColor={themeColor}
+            colors={[themeColor]}
             refreshing={createStore().isLoading}
             onRefresh={() => loadData()}
-            tintColor={THEME_COLOR}
+            tintColor={themeColor}
           />
         }
         ListFooterComponent={() => genIndicator()}
@@ -236,6 +235,7 @@ const TrendingTab = (props) => {
 const TrendingPage = (props): React$Node => {
   const language = useSelector((state) => state.language)
   const [tabNames, setTabNames] = useState([...language.languages])
+  const { theme } = useSelector((state) => state.theme)
   const [visible, setVisible] = useState(false)
   const [timeSpan, setTimeSpan] = useState(TimeSpans[0])
   const buttonRef = useRef(null)
@@ -262,7 +262,12 @@ const TrendingPage = (props): React$Node => {
       if (item.checked) {
         tabs[`tab${index}`] = {
           screen: (props) => (
-            <TrendingTab {...props} timeSpan={timeSpan} tabLabel={item.name} />
+            <TrendingTab
+              {...props}
+              timeSpan={timeSpan}
+              tabLabel={item.name}
+              themeColor={theme.themeColor}
+            />
           ),
           navigationOptions: {
             title: item.name === '' ? 'All Language' : item.name,
@@ -279,7 +284,7 @@ const TrendingPage = (props): React$Node => {
               upperCaseLabel: false,
               scrollEnabled: true,
               style: {
-                backgroundColor: THEME_COLOR,
+                backgroundColor: theme.themeColor,
               },
               indicatorStyle: styles.indicatorStyle,
               labelStyle: styles.labelStyle,
@@ -288,10 +293,10 @@ const TrendingPage = (props): React$Node => {
           }),
         )
       : null
-  }, [tabNames])
+  }, [tabNames, theme])
 
   const statusBar = {
-    backgroundColor: THEME_COLOR,
+    backgroundColor: theme.themeColor,
     barStyle: 'light-content',
   }
 
@@ -341,7 +346,7 @@ const TrendingPage = (props): React$Node => {
     <NavigationBar
       title={renderTitleView()}
       statusBar={statusBar}
-      style={{ backgroundColor: THEME_COLOR }}
+      style={{ backgroundColor: theme.themeColor }}
     />
   )
 

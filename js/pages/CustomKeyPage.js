@@ -33,14 +33,10 @@ const styles = StyleSheet.create({
   },
 })
 
-const URL = 'https://api.github.com/search/repositories?q='
-const QUERY_STR = '&sort=stars'
-const THEME_COLOR = '#678'
-const PAGESIZE = 10
-
 const CustomKeyPage = (props): React$Node => {
   const { navigation } = props
   const { params } = navigation.state
+  const { theme } = useSelector((state) => state.theme)
   const [changeValues, setChangeValues] = useState([])
   const isRemoveKey = !!params.isRemoveKey
 
@@ -116,7 +112,7 @@ const CustomKeyPage = (props): React$Node => {
   })
 
   const statusBar = {
-    backgroundColor: THEME_COLOR,
+    backgroundColor: theme.themeColor,
     barStyle: 'light-content',
   }
 
@@ -182,7 +178,7 @@ const CustomKeyPage = (props): React$Node => {
         name={checked ? 'ios-checkbox' : 'md-square-outline'}
         size={20}
         style={{
-          color: THEME_COLOR,
+          color: theme.themeColor,
         }}
       />
     )
@@ -196,7 +192,7 @@ const CustomKeyPage = (props): React$Node => {
         onSave()
       })}
       leftButton={getLeftBackButton(() => onBackFunc())}
-      style={{ backgroundColor: THEME_COLOR }}
+      style={{ backgroundColor: theme.themeColor }}
     />
   )
 

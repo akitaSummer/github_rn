@@ -15,6 +15,7 @@
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "^0.1.10",
     "GitHubTrending": "^5.0.0",
+    "deprecated-react-native-listview": "^0.0.6",
     "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-native": "0.63.3",
@@ -23,10 +24,12 @@
     "react-native-event-bus": "^1.0.0",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-htmlview": "^0.15.0",
+    "react-native-modal-dropdown": "^0.6.2",
     "react-native-parallax-scroll-view": "^0.21.3",
     "react-native-reanimated": "^1.13.1",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.14.0",
+    "react-native-sortable-list": "^0.0.24",
     "react-native-vector-icons": "^7.1.0",
     "react-native-webview": "^10.10.2",
     "react-navigation": "^4.4.3",
@@ -49,5 +52,8 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "resolutions": {
+    "deprecated-react-native-listview": "0.0.6"
   }
 }

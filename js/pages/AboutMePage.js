@@ -17,8 +17,7 @@ import { FLAG_ABOUT } from '../components/AboutCommon'
 import config from '../res/data/config.json'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Toast from 'react-native-easy-toast'
-
-const THEME_COLOR = '#678'
+import { useSelector } from 'react-redux'
 
 const styles = StyleSheet.create({
   container: {
@@ -49,6 +48,7 @@ const styles = StyleSheet.create({
 const AboutMePage = (props): React$Node => {
   const { navigation } = props
   const { params } = navigation.state
+  const { theme } = useSelector((state) => state.theme)
   const [data, setData] = useState(config)
   const [showBlog, setShowBlog] = useState(false)
   const [showTutorial, setShowTutorial] = useState(false)
@@ -91,7 +91,7 @@ const AboutMePage = (props): React$Node => {
           <MenuItem
             callback={() => onClick(dic[i])}
             menu={{ text: title }}
-            color={THEME_COLOR}
+            color={theme.themeColor}
           />
           <View style={GlobalStyles.line} />
         </View>,
@@ -117,7 +117,7 @@ const AboutMePage = (props): React$Node => {
             text: data.aboutMe.Tutorial.name,
             Icons: Ionicons,
           }}
-          color={THEME_COLOR}
+          color={theme.themeColor}
           expandableIco={showTutorial ? 'ios-arrow-up' : 'ios-arrow-down'}
         />
         <View style={GlobalStyles.line} />
@@ -131,7 +131,7 @@ const AboutMePage = (props): React$Node => {
             text: data.aboutMe.Blog.name,
             Icons: Ionicons,
           }}
-          color={THEME_COLOR}
+          color={theme.themeColor}
           expandableIco={showBlog ? 'ios-arrow-up' : 'ios-arrow-down'}
         />
         <View style={GlobalStyles.line} />
@@ -145,7 +145,7 @@ const AboutMePage = (props): React$Node => {
             text: data.aboutMe.QQ.name,
             Icons: Ionicons,
           }}
-          color={THEME_COLOR}
+          color={theme.themeColor}
           expandableIco={showQQ ? 'ios-arrow-up' : 'ios-arrow-down'}
         />
         <View style={GlobalStyles.line} />
@@ -159,7 +159,7 @@ const AboutMePage = (props): React$Node => {
             text: data.aboutMe.Contact.name,
             Icons: Ionicons,
           }}
-          color={THEME_COLOR}
+          color={theme.themeColor}
           expandableIco={showContact ? 'ios-arrow-up' : 'ios-arrow-down'}
         />
         <View style={GlobalStyles.line} />
