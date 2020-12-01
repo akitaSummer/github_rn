@@ -71,7 +71,7 @@ const TABS = {
 
 const DynamicTabNavigator = () => {
   console.disableYellowBox = true
-
+  const { theme } = useSelector((state) => state.theme)
   const Tab = useMemo(() => {
     return (() => {
       const { PopularPage, TrendingPage, FavoritePage, MyPage } = TABS
@@ -80,7 +80,6 @@ const DynamicTabNavigator = () => {
       return createAppContainer(
         createBottomTabNavigator(tabs, {
           tabBarComponent: (props) => {
-            const theme = useSelector((state) => state.theme)
             return (
               <BottomTabBar {...props} activeTintColor={theme.themeColor} />
             )
@@ -88,7 +87,7 @@ const DynamicTabNavigator = () => {
         }),
       )
     })()
-  }, [])
+  }, [theme.themeColor])
 
   return (
     <Tab

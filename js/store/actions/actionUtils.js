@@ -32,14 +32,14 @@ const projectModels = async (type, showItems, callback) => {
   }
 }
 
-const handleData = (
+export const handleData = (
   actionType,
   dispatch,
   storeName,
   data,
   pageSize,
-  favorite,
   type,
+  params,
 ) => {
   const fixItems = []
   if (data?.data) {
@@ -60,6 +60,7 @@ const handleData = (
       storeName,
       pageIndex: 1,
       items: fixItems,
+      ...params,
     })
   })
 }
@@ -118,7 +119,6 @@ export const onRefresh = (type, storeName, url, pageSize, favorite) => {
         storeName,
         data,
         pageSize,
-        favorite,
         type,
       )
     } catch (e) {
@@ -148,5 +148,11 @@ export const onFlushFavorite = (
         projectModes: projectModels,
       })
     })
+  }
+}
+
+export const doCallBack = (callBack, object) => {
+  if (typeof callBack === 'function') {
+    callBack(object)
   }
 }

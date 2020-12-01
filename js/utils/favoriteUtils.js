@@ -80,3 +80,12 @@ export const onFavorite = (page, item, isFavorite) => {
     removeFavoriteItem(page, key)
   }
 }
+
+export const checkKeyIsExist = (keys, key) => {
+  for (let i = 0; i < keys.length; i++) {
+    if (key.toLowerCase() === keys[i].name.toLowerCase()) {
+      return true
+    }
+  }
+  return false
+}

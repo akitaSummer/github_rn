@@ -172,7 +172,6 @@ const CustomKeyPage = (props): React$Node => {
   }
 
   const checkImage = (checked) => {
-    const { theme } = params
     return (
       <Ionicons
         name={checked ? 'ios-checkbox' : 'md-square-outline'}
