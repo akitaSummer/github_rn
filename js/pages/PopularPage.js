@@ -15,6 +15,7 @@ import {
   FlatList,
   Text,
   DeviceInfo,
+  TouchableOpacity,
 } from 'react-native'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
 import { createAppContainer } from 'react-navigation'
@@ -28,6 +29,7 @@ import { ACTION_TYPES } from '../store/actions/actionUtils'
 import EventBus from 'react-native-event-bus'
 import { EventTypes } from '../utils/EventUtils'
 import { FLAG_LANGUAGE } from '../utils/languageUtils'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const styles = StyleSheet.create({
   container: {
@@ -289,11 +291,31 @@ const PopularPage = (props): React$Node => {
     barStyle: 'light-content',
   }
 
+  const rightButton = (
+    <TouchableOpacity
+      onPress={() => {
+        goPage({ theme }, 'SearchPage')
+      }}>
+      <View style={{ padding: 5, marginRight: 8 }}>
+        <Ionicons
+          name={'ios-search'}
+          alignSelf={'center'}
+          style={{
+            marginRight: 8,
+            alignSelf: 'center',
+            color: 'white',
+          }}
+        />
+      </View>
+    </TouchableOpacity>
+  )
+
   const navigationBar = (
     <NavigationBar
       title={'hot'}
       statusBar={statusBar}
       style={{ backgroundColor: theme.themeColor }}
+      rightButton={rightButton}
     />
   )
 

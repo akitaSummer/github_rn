@@ -26,7 +26,7 @@ const onAction = (state = defaultState, action) => {
         hideLoadingMore: false,
         showBottomButton: action.showBottomButton,
         items: action.items,
-        projectModels: action.projectModels,
+        projectModels: action.projectModes,
         pageIndex: action.pageIndex,
         showText: '搜索',
         inputKey: action.inputKey,
@@ -46,7 +46,7 @@ const onAction = (state = defaultState, action) => {
     case Types.SEARCH_LOAD_MORE_SUCCESS: //上拉加载更多成功
       return {
         ...state,
-        projectModels: action.projectModels,
+        projectModels: action.projectModes,
         hideLoadingMore: false,
         pageIndex: action.pageIndex,
       }
