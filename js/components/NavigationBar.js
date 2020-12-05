@@ -6,12 +6,13 @@ import {
   StyleSheet,
   Text,
   StatusBar,
+  DeviceInfo,
 } from 'react-native'
 import { PropTypes } from 'prop-types'
 
 const NAV_BAR_HEIGHT_IOS = 44
 const NAV_BAR_HEIGHT_ANDROID = 50
-const STATUS_BAR_HEIGHT = 20
+const STATUS_BAR_HEIGHT = DeviceInfo.isIPhoneX_deprecated ? 0 : 20
 
 const styles = StyleSheet.create({
   naBarButton: {

@@ -7,13 +7,7 @@
  */
 
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import {
-  StyleSheet,
-  View,
-  DeviceInfo,
-  FlatList,
-  RefreshControl,
-} from 'react-native'
+import { StyleSheet, View, FlatList, RefreshControl } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { onThemeChange } from '../store/actions/theme'
 import actions from '../store/actions'
@@ -31,7 +25,6 @@ import { EventTypes } from '../utils/EventUtils'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: DeviceInfo.isIphoneX_deprecated ? 30 : 0,
   },
   welcome: {
     fontSize: 20,

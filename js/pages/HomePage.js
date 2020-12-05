@@ -13,6 +13,7 @@ import { HomePageNavigation } from '../navigator/NavigationUtil'
 import CustomTheme from '../components/CustomTheme'
 import { useDispatch, useSelector } from 'react-redux'
 import actions from '../store/actions'
+import SafeAreaViewPlus from '../components/SafeAreaViewPlus'
 
 const styles = StyleSheet.create({
   container: {
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
 })
 
 const HomePage = (props) => {
+  const { theme } = useSelector((state) => state.theme)
   const { customThemeViewVisible } = useSelector((state) => state.theme)
   const dispatch = useDispatch()
   const showCustomThemeView = useCallback(
@@ -52,10 +54,10 @@ const HomePage = (props) => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaViewPlus style={{ flex: 1 }} topColor={theme.themeColor}>
       <DynamicTabNavigator />
       {renderCustomThemeView()}
-    </View>
+    </SafeAreaViewPlus>
   )
 }
 

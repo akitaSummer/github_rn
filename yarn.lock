@@ -2523,7 +2523,7 @@ depd@~1.1.2:
   resolved "https://registry.npm.taobao.org/depd/download/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
   integrity sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=
 
-deprecated-react-native-listview@0.0.6, deprecated-react-native-listview@^0.0.5, deprecated-react-native-listview@^0.0.6:
+deprecated-react-native-listview@0.0.6, deprecated-react-native-listview@^0.0.6:
   version "0.0.6"
   resolved "https://registry.npm.taobao.org/deprecated-react-native-listview/download/deprecated-react-native-listview-0.0.6.tgz#f9169dd703398a7792e5bcb8b851e741a8cb6980"
   integrity sha1-+Rad1wM5ineS5by4uFHnQajLaYA=
@@ -6038,12 +6038,10 @@ react-native-sortable-list@^0.0.24:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-sortable-listview@^0.2.9:
-  version "0.2.9"
-  resolved "https://registry.npm.taobao.org/react-native-sortable-listview/download/react-native-sortable-listview-0.2.9.tgz#1719c64a7ee78ce14403fa49ba2d80628363530d"
-  integrity sha1-FxnGSn7njOFEA/pJui2AYoNjUw0=
-  dependencies:
-    deprecated-react-native-listview "^0.0.5"
+react-native-splash-screen@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.npm.taobao.org/react-native-splash-screen/download/react-native-splash-screen-3.2.0.tgz#d47ec8557b1ba988ee3ea98d01463081b60fff45"
+  integrity sha1-1H7IVXsbqYjuPqmNAUYwgbYP/0U=
 
 react-native-tab-view@^2.15.2:
   version "2.15.2"

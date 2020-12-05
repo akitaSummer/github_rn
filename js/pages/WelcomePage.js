@@ -9,6 +9,7 @@
 import React, { useEffect } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { resetToHomePage } from '../navigator/NavigationUtil'
+import SplashScreen from 'react-native-splash-screen'
 
 const styles = StyleSheet.create({
   container: {
@@ -21,6 +22,7 @@ const styles = StyleSheet.create({
 const WelcomePage = (props): React$Node => {
   useEffect(() => {
     const timer = setTimeout(() => {
+      SplashScreen.hide()
       resetToHomePage(props)
     }, 2000)
     return () => {

@@ -14,7 +14,6 @@ import {
   RefreshControl,
   FlatList,
   Text,
-  DeviceInfo,
   TouchableOpacity,
   DeviceEventEmitter,
 } from 'react-native'
@@ -36,7 +35,6 @@ import { FLAG_LANGUAGE } from '../utils/languageUtils'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: DeviceInfo.isIphoneX_deprecated ? 30 : 0,
   },
   welcome: {
     fontSize: 20,

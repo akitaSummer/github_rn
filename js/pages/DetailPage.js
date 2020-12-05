@@ -15,6 +15,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import useBackPress from '../hooks/useBackPress'
 import { removeFavoriteItem, saveFavoriteItem } from '../utils/favoriteUtils'
 import { useSelector } from 'react-redux'
+import SafeAreaViewPlus from '../components/SafeAreaViewPlus'
 
 const styles = StyleSheet.create({
   container: {
@@ -113,7 +114,7 @@ const DetailPage = (props): React$Node => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaViewPlus style={styles.container} topColor={theme.themeColor}>
       {navigationBar()}
       <WebView
         ref={webView}
@@ -121,7 +122,7 @@ const DetailPage = (props): React$Node => {
         onNavigationStateChange={(e) => onNavigationStateChange(e)}
         source={{ uri: url }}
       />
-    </View>
+    </SafeAreaViewPlus>
   )
 }
 

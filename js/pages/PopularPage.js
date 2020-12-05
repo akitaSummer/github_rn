@@ -14,7 +14,6 @@ import {
   RefreshControl,
   FlatList,
   Text,
-  DeviceInfo,
   TouchableOpacity,
 } from 'react-native'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
@@ -34,7 +33,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: DeviceInfo.isIphoneX_deprecated ? 30 : 0,
   },
   welcome: {
     fontSize: 20,
